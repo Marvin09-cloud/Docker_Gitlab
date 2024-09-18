@@ -67,7 +67,7 @@ To do this, use the scp command :
 scp -r root@VMgitlab: /var/opt/gitlab/backups/file_gitlab_backup.tar /home/user/backup/filename_choose_gitlab_backup.tar
 ```
 
-` `This command transfers a copy of the backup created in step 3 to the backup directory of the gitlab container host.
+This command transfers a copy of the backup created in step 3 to the backup directory of the gitlab container host.
 
 **STEP 5 :** Restore data in the Docker container
 
