@@ -15,10 +15,7 @@ services:
     restart: always
     hostname: 'localhost'
     container_name: gitlab-ee
-    environment:Next, it will need to start restoring the copied data to the `srv/gitlab/data/backups` volume of the container (without **gitlab_backup.tar** extension):
-```
-gitlab-backup restore BACKUP= backup_file_name
-```
+    environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://localhost'
     ports:
