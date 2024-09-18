@@ -15,7 +15,10 @@ services:
     restart: always
     hostname: 'localhost'
     container_name: gitlab-ee
-    environment:
+    environment:Next, it will need to start restoring the copied data to the `srv/gitlab/data/backups` volume of the container (without **gitlab_backup.tar** extension):
+```
+gitlab-backup restore BACKUP= backup_file_name
+```
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://localhost'
     ports:
@@ -51,7 +54,7 @@ Then launch the container:
 docker-compose up –d
 ```
 
-**STEP 3 :** Data backup from vm 
+**STEP 2 :** Data backup from vm 
 
 To do this, you need to connect to the vm using ssh. The user must then execute the following command: 
 ``` 
@@ -60,7 +63,8 @@ sudo gitlab-rake gitlab:backup:create
 
 This will create a backup file in the `/var/opt/gitlab/backups/` directory of the vm, containing all files, databases and git repositories.
 
-**STEP 4:** Transfer backup to Gitlab docker container host
+
+**STEP 3 :** Transfer backup to Gitlab docker container host
 
 To do this, use the scp command :
 ```
@@ -69,15 +73,15 @@ scp -r root@VMgitlab: /var/opt/gitlab/backups/file_gitlab_backup.tar /home/user/
 
 This command transfers a copy of the backup created in step 3 to the backup directory of the gitlab container host.
 
-**STEP 5 :** Restore data in the Docker container
+
+**STEP 4 :** Restore data in the Docker container
 
 Copy the backup file contained in the container host to a docker backup volume:
 ```
 sudo cp /home/user/backup/file_gitlab_backup.tar ./srv/gitlab/data/backups/
 ```
 
-
-**STEP 6 :**  Finalizing dockerization
+**STEP 5 :**  Finalizing dockerization
 
 Once all these prerequisites have been met, the user must log on as root to the gitlab container created:
 ```
@@ -89,7 +93,7 @@ Next, it will need to start restoring the copied data to the `srv/gitlab/data/ba
 gitlab-backup restore BACKUP= backup_file_name
 ```
 
-**STEP 7 :** Test 
+**STEP 6 :** Test 
 
 Finally, the user must connect to a browser as localhost on port 8080. In this case, the interface should look like this:
 
