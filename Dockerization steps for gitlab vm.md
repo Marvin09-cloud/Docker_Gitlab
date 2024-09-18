@@ -4,16 +4,7 @@
 
 This document summarizes all the commands and steps required to dock a gitlab vm.
 
-**STEP 1 :** Récupérer l’image de gitlab 
-
-First, get the gitlab image from dockerHub. Command on bash:
-
-```
-docker pull gitlab/gitlab-ee
-```
-
-
-**STEP 2 :** Creating docker-compose
+**STEP 1 :** Creating docker-compose
 
 Then create a docker-compose.yml file in which to specify the specifications of the container gitlab has created so that it functions correctly. Here's how it looks:
 ```
@@ -74,7 +65,7 @@ This will create a backup file in the `/var/opt/gitlab/backups/` directory of th
 
 To do this, use the scp command :
 ```
-scp -r [root@VMgitlab: /var/opt/gitlab/backups/file_gitlab_backup.tar](mailto:root@VMgitlab:/var/opt/gitlab/backups/file_gitlab_backup.tar) [/home/@user/backup/filename_choisi_gitlab_backup.tar**](mailto:/home/@user/backup/git_test1_gitlab_backup.tar)
+scp -r root@VMgitlab: /var/opt/gitlab/backups/file_gitlab_backup.tar /home/user/backup/filename_choose_gitlab_backup.tar
 ```
 
 ` `This command transfers a copy of the backup created in step 3 to the backup directory of the gitlab container host.
@@ -83,7 +74,7 @@ scp -r [root@VMgitlab: /var/opt/gitlab/backups/file_gitlab_backup.tar](mailto:ro
 
 Copy the backup file contained in the container host to a docker backup volume:
 ```
-cp /home/@user/backup/filename\_chosed\_gitlab\_backup.tar /srv/gitlab/data/backups/
+sudo cp /home/user/backup/file_gitlab_backup.tar ./srv/gitlab/data/backups/
 ```
 
 
@@ -94,9 +85,10 @@ Once all these prerequisites have been met, the user must log on as root to the 
 docker exec -it gitlab-ee /bin/bash
 ```
 
-Next, it will need to start restoring the copied data to the << `srv/gitlab/data/backups` >> volume of the container:
-
-`gitlab-backup restore BACKUP= backup\_file\_name` (**without **gitlab\_backup.tar** extension)
+Next, it will need to start restoring the copied data to the `srv/gitlab/data/backups` volume of the container (without **gitlab_backup.tar** extension):
+```
+gitlab-backup restore BACKUP= backup_file_name
+```
 
 **STEP 7 :** Test 
 
