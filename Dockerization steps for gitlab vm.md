@@ -1,5 +1,4 @@
-**                                         Dockerisation vm gitlab   
-**
+                                        ##Dockerisation vm gitlab   
 
 
 This document summarizes all the commands and steps required to dock a gitlab vm.
